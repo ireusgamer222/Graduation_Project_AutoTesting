@@ -62,7 +62,6 @@ public class Constants {
     public static final String ERR_UNSUCCESSFUL_LOGIN = "Login was unsuccessful. Please correct the errors and try again.";
     public static final String ERR_NO_ACCOUNT = "No customer account found";
 
-
     // ==========================================
     //      REGISTRATION ERROR MESSAGES
     // ==========================================
@@ -72,5 +71,19 @@ public class Constants {
     public static final String ERR_REQ_PASSWORD = "Password is required.";
     public static final String ERR_REQ_CONFIRMPASSWORD = "Password is required."; // Note: Adjust this if DemoWebShop expects "The password and confirmation password do not match."
 
+    // ==========================================
+    //          SEARCH TEST DATA
+    // ==========================================
+    public static final String SEARCH_TERM_VALID = "Laptop";
+    public static final String SEARCH_TERM_PARTIAL = "Lap";
+    public static final String SEARCH_TERM_INVALID = "abcdef123";
+    public static final String ERR_NO_SEARCH_RESULTS = "No products were found that matched your criteria.";
+
+    // ==========================================
+    //       CUSTOMER INFO TEST DATA
+    // ==========================================
+    public static final String CUSTOMER_FIRST_NAME = "Bassant";
+    public static final String CUSTOMER_LAST_NAME = "Amr";
+    public static final String CUSTOMER_EMAIL = "bassantamr032@gmail.com";
 
 }

@@ -9,12 +9,30 @@ public class HomePage extends BasePage {
 
     // Core Locators
     private final By loginHeaderLink = By.className("ico-login");
-    private final By logoutLink = By.className("ico-logout"); // 🎯 ADDED: Added locator for logout session state
+    private final By logoutLink = By.className("ico-logout");
     private final By emailField = By.id("Email");
     private final By passwordField = By.id("Password");
     private final By loginButton = By.cssSelector("input.login-button");
     private final By shoppingCartLink = By.className("cart-label");
     private final By registerLink = By.linkText("Register");
+    private final By logo = By.className("header-logo");
+
+    // Header Menu Locators
+    private final By booksMenu = By.cssSelector("a[href='/books']");
+    private final By computersMenu = By.cssSelector("a[href='/computers']");
+    private final By electronicsMenu = By.cssSelector("a[href='/electronics']");
+    private final By apparelMenu = By.linkText("Apparel & Shoes");
+    private final By digitalDownloadsMenu = By.linkText("Digital downloads");
+    private final By jewelryMenu = By.linkText("Jewelry");
+    private final By giftCardsMenu = By.linkText("Gift Cards");
+
+    // Header Top Right Links
+    private final By wishlistHeaderLink = By.className("ico-wishlist");
+
+    // Footer Locators
+    private final By sitemapLink = By.linkText("Sitemap");
+    private final By aboutUsLink = By.linkText("About us");
+    private final By contactUsLink = By.linkText("Contact us");
 
     // Dynamic Product Search & Addition Locators
     private final By searchBox = By.id("small-searchterms");
@@ -28,6 +46,11 @@ public class HomePage extends BasePage {
     // Product and Badge Locators
     private final By laptopAddToCartButton = By.xpath("//a[text()='14.1-inch Laptop']/ancestor::div[@class='details']//input[@value='Add to cart']");
     private final By cartBadge = By.className("cart-qty");
+
+    // ==========================================
+    //            HEADER LOCATORS
+    // ==========================================
+    private final By headerAccountEmailLink = By.cssSelector("div.header-links a.account");
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -44,6 +67,24 @@ public class HomePage extends BasePage {
     public ShoppingCartPage clickShoppingCart() {
         click(shoppingCartLink);
         return new ShoppingCartPage(driver);
+    }
+
+    public WishlistPage clickWishlist() {
+        click(wishlistHeaderLink);
+        return new WishlistPage(driver);
+    }
+
+    public boolean isLogoDisplayed() {
+        try {
+            return driver.findElement(logo).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void searchProduct(String product) {
+        writeText(searchBox, product);
+        click(searchButton);
     }
 
     /**
@@ -103,15 +144,9 @@ public class HomePage extends BasePage {
         return readText(cartBadge);
     }
 
-    // 🎯 ADDED: This connects to your BasePage visibility helper to stabilize the post-login state
     public void waitForVisibilityOfLogout() {
         waitForVisibility(logoutLink);
     }
-
-
-    // ==========================================
-    //       NEW METHODS FOR ADD TO CART TESTS
-    // ==========================================
 
     /**
      * Safely checks if the user is logged in by looking for the logout link.
@@ -139,7 +174,6 @@ public class HomePage extends BasePage {
     public int getCartBadgeCountAsInt() {
         try {
             String badgeText = getCartBadgeCount();
-            // Strip out parentheses and whitespace
             String numericText = badgeText.replaceAll("[^0-9]", "");
             if (numericText.isEmpty()) {
                 return 0;
@@ -156,8 +190,6 @@ public class HomePage extends BasePage {
     public void waitForCartBadgeToUpdate(int initialCount) {
         int expectedCount = initialCount + 1;
         String expectedText = "(" + expectedCount + ")";
-
-        // Wait for the exact expected string to appear in the DOM
         wait.until(ExpectedConditions.textToBePresentInElementLocated(cartBadge, expectedText));
     }
 
@@ -168,16 +200,13 @@ public class HomePage extends BasePage {
         addProductToCart(productName);
     }
 
-
     public void logoutSession() {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
         } catch (Exception e) {
-            // Fallback if primary locator fails
             wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Log out"))).click();
         }
     }
-
 
     public void clickRegisterLink() {
         click(registerLink);
@@ -187,11 +216,6 @@ public class HomePage extends BasePage {
         click(logoutLink);
     }
 
-
-    // ==========================================
-    //            HEADER LOCATORS
-    // ==========================================
-    private final By headerAccountEmailLink = By.cssSelector("div.header-links a.account");
     // ==========================================
     //            SESSION METHODS
     // ==========================================
@@ -201,6 +225,58 @@ public class HomePage extends BasePage {
      */
     public String getLoggedCustomerEmail() {
         return readText(headerAccountEmailLink);
+    }
+
+    // ==========================================
+    //       HEADER & FOOTER METHODS
+    // ==========================================
+
+    public void clickBooks() {
+        click(booksMenu);
+    }
+
+    public void clickComputers() {
+        click(computersMenu);
+    }
+
+    public void clickElectronics() {
+        click(electronicsMenu);
+    }
+
+    public void clickApparel() {
+        click(apparelMenu);
+    }
+
+    public void clickDigitalDownloads() {
+        click(digitalDownloadsMenu);
+    }
+
+    public void clickJewelry() {
+        click(jewelryMenu);
+    }
+
+    public void clickGiftCards() {
+        click(giftCardsMenu);
+    }
+
+    public void clickSitemap() {
+        click(sitemapLink);
+    }
+
+    public void clickAboutUs() {
+        click(aboutUsLink);
+    }
+
+    public void clickContactUs() {
+        click(contactUsLink);
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    public String getPageTitle() {
+        return driver.getTitle();
     }
 
 }
