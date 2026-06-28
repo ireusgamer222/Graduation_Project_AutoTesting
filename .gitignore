@@ -1,24 +1,45 @@
-# Compiled class files
+# ===== Compiled Class Files =====
 target/
+build/
 *.class
 
-# Package files
+# ===== Package Files =====
 *.jar
 *.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
-# IDE specific files
+# ===== IDE Specific Files =====
+# IntelliJ IDEA
 .idea/
 *.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.metadata/
 .vscode/
 .settings/
 .project
 .classpath
+.factorypath
 
-# Operating system files
+# ===== Operating System Files =====
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Logs and reports
+# ===== Logs and Reports =====
 *.log
 /test-output/
 /screenshots/*.png
+
+# ===== Selenium / Drivers =====
+# Ignore downloaded driver executables if you put them locally
+*.exe
+chromedriver.exe
+geckodriver.exe
+ edgedriver.exe

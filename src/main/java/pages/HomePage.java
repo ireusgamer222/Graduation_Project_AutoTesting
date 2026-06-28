@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.JavascriptExecutor;
@@ -28,11 +29,26 @@ public class HomePage extends BasePage {
 
     // Header Top Right Links
     private final By wishlistHeaderLink = By.className("ico-wishlist");
+    private final By headerAccountEmailLink = By.cssSelector("div.header-links a.account");
 
     // Footer Locators
     private final By sitemapLink = By.linkText("Sitemap");
     private final By aboutUsLink = By.linkText("About us");
     private final By contactUsLink = By.linkText("Contact us");
+    private final By newsLink = By.cssSelector("a[href='/news']");
+
+    // Newsletter Locators
+    private final By newsletterEmail = By.id("newsletter-email");
+    private final By newsletterSubmit = By.cssSelector("input#newsletter-subscribe-button");
+    private final By newsletterResult = By.id("newsletter-result-block");
+
+    // Follow Us Locators
+    private final By facebookLink = By.cssSelector("a[href*='facebook']");
+    private final By twitterLink = By.cssSelector("a[href*='twitter.com']");
+    private final By youtubeLink = By.cssSelector("a[href*='youtube']");
+    private final By rssLink = By.cssSelector("a[href*='rss']");
+    private final By googlePlusLink = By.cssSelector("a[href*='google']");
+    private final By followUsSection = By.cssSelector(".follow-us");
 
     // Dynamic Product Search & Addition Locators
     private final By searchBox = By.id("small-searchterms");
@@ -46,11 +62,6 @@ public class HomePage extends BasePage {
     // Product and Badge Locators
     private final By laptopAddToCartButton = By.xpath("//a[text()='14.1-inch Laptop']/ancestor::div[@class='details']//input[@value='Add to cart']");
     private final By cartBadge = By.className("cart-qty");
-
-    // ==========================================
-    //            HEADER LOCATORS
-    // ==========================================
-    private final By headerAccountEmailLink = By.cssSelector("div.header-links a.account");
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -279,4 +290,76 @@ public class HomePage extends BasePage {
         return driver.getTitle();
     }
 
+    // ==========================================
+    //           NEWS & NEWSLETTER
+    // ==========================================
+
+    public void clickNewsLink() {
+        click(newsLink);
+    }
+
+    public boolean isNewsLinkVisible() {
+        try {
+            return driver.findElement(newsLink).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void enterNewsletterEmail(String email) {
+        writeText(newsletterEmail, email);
+    }
+
+    public void clickSubscribe() {
+        click(newsletterSubmit);
+    }
+
+    public void pressEnterOnNewsletterEmail() {
+        driver.findElement(newsletterEmail).sendKeys(Keys.ENTER);
+    }
+
+    public String getNewsletterResult() {
+        // Uses BasePage readText wrapper to safely wait and read the AJAX result
+        return readText(newsletterResult);
+    }
+
+    public boolean isSubscribeButtonVisible() {
+        try {
+            return driver.findElement(newsletterSubmit).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // ==========================================
+    //            FOLLOW US METHODS
+    // ==========================================
+
+    public void clickFacebook() {
+        click(facebookLink);
+    }
+
+    public void clickTwitter() {
+        click(twitterLink);
+    }
+
+    public void clickYoutube() {
+        click(youtubeLink);
+    }
+
+    public void clickRss() {
+        click(rssLink);
+    }
+
+    public void clickGooglePlus() {
+        click(googlePlusLink);
+    }
+
+    public boolean isFollowUsSectionVisible() {
+        try {
+            return driver.findElement(followUsSection).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
